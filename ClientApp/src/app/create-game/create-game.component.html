@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>{{title}}</h1>
+<div mat-dialog-content>
+  <form class="example-form" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <input matInput placeholder="enter name" type="text" required [(ngModel)]="game.name" name="name">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="enter password" type="text" required [(ngModel)]="game.password" name="password">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select matInput placeholder="select game" required name="gameType">
+        <mat-option *ngFor="let type of gameTypes" [value]="type">
+          {{ type }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-raised-button type="submit" color="primary">Save</button>
+  </form>
+</div>
