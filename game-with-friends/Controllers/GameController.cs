@@ -9,16 +9,16 @@ namespace game_with_frands.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    public class GameController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
-        private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ILogger<GameController> _logger;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public GameController(ILogger<GameController> logger)
         {
             _logger = logger;
         }
