@@ -1,1 +1,32 @@
-<p>game-menu works!</p>
+<h1 mat-dialog-title>{{title}}</h1>
+
+<button mat-raised-button color="primary" (click)="onNewGameClick()">Create Game</button>
+
+<mat-divider></mat-divider>
+
+<table mat-table [dataSource]="getActiveGames()">
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef> Name </th>
+    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+  </ng-container>
+
+  <!-- Password Column -->
+  <ng-container matColumnDef="password">
+    <th mat-header-cell *matHeaderCellDef> Password </th>
+    <td mat-cell *matCellDef="let element"> {{element.password}} </td>
+  </ng-container>
+
+  <!-- Type Column -->
+  <ng-container matColumnDef="type">
+    <th mat-header-cell *matHeaderCellDef> Game Type </th>
+    <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<mat-paginator [length]="getActiveGames().length" [pageSize]="pageSize" (page)="pageEvent = $event">
+</mat-paginator>

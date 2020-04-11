@@ -1,5 +1,5 @@
 export enum GameType {
-  none,
-  catan,
-  pandemic
+  none = 'None',
+  catan = 'Catan',
+  pandemic = 'Pandemic'
 }

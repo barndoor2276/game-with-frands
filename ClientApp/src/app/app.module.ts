@@ -3,20 +3,26 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  MatAutocompleteModule,
+  MatSelectModule,
+  MatInputModule,
+  MatDialogModule,
+  MatTableModule,
+  MatDividerModule,
+  MatButtonModule,
+  MatPaginatorModule
+} from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
+import { GameMenuComponent } from './game-menu/game-menu.component';
 import { CreateGameComponent } from './create-game/create-game.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {
-  MatAutocompleteModule,
-  MatSelectModule,
-  MatInputModule,
-  MatDialogModule
-} from '@angular/material';
+
 
 @NgModule({
   declarations: [
@@ -25,6 +31,7 @@ import {
     HomeComponent,
     CounterComponent,
     FetchDataComponent,
+    GameMenuComponent,
     CreateGameComponent
   ],
   imports: [
@@ -35,15 +42,20 @@ import {
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
-      { path: 'create-game', component: CreateGameComponent },
+      { path: 'game-menu', component: GameMenuComponent },
     ]),
     BrowserAnimationsModule,
     MatAutocompleteModule,
     MatSelectModule,
     MatInputModule,
-    MatDialogModule
+    MatDialogModule,
+    MatTableModule,
+    MatDividerModule,
+    MatButtonModule,
+    MatPaginatorModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [CreateGameComponent]
 })
 export class AppModule { }
