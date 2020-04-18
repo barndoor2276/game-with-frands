@@ -8,7 +8,7 @@
       <input matInput placeholder="enter password" type="text" required [(ngModel)]="game.password" name="password">
     </mat-form-field>
     <mat-form-field>
-      <mat-select matInput placeholder="select game" required name="gameType">
+      <mat-select matInput placeholder="select game" required [(ngModel)]="game.type" name="gameType">
         <mat-option *ngFor="let type of gameTypes" [value]="type">
           {{ type }}
         </mat-option>

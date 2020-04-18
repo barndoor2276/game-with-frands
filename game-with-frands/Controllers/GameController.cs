@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -11,10 +12,7 @@ namespace game_with_frands.Controllers
     [Route("[controller]")]
     public class GameController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
+        private static List<IGame> ActiveGames = new List<IGame>();
 
         private readonly ILogger<GameController> _logger;
 
@@ -23,17 +21,17 @@ namespace game_with_frands.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
+        [HttpPost]
+        public IEnumerable<IGame> Post(IEnumerable<IGame> games)
         {
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            })
-            .ToArray();
+            GameController.ActiveGames.AddRange(games);
+            return GameController.ActiveGames;
+        }
+
+        [HttpGet]
+        public IEnumerable<IGame> Get()
+        {
+            return GameController.ActiveGames;
         }
     }
 }

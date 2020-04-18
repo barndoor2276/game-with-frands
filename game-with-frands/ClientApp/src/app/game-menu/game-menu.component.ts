@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog, PageEvent } from '@angular/material';
+import { HttpClient } from '@angular/common/http';
 
 import { CreateGameComponent } from '../create-game/create-game.component';
 import { GameModel } from '../../shared/models/game/game.model';
@@ -15,10 +16,17 @@ export class GameMenuComponent implements OnInit {
   public displayedColumns = ['name', 'password', 'type'];
   public pageSize = 10;
   public pageEvent: PageEvent;
+  private activeGames: GameModel[] = [];
 
-  constructor(private dialog: MatDialog) { }
+  constructor(
+    private dialog: MatDialog,
+    private http: HttpClient,
+    @Inject('BASE_URL') private baseUrl: string) { }
 
   ngOnInit() {
+    this.http.get<GameModel[]>(this.baseUrl + 'game').subscribe(result => {
+      this.activeGames = result;
+    }, error => { console.log(error) });
   }
 
   onNewGameClick() {
@@ -31,11 +39,8 @@ export class GameMenuComponent implements OnInit {
     });
   }
 
-  getActiveGames(): GameModel[] {
-    return [
-      { name: 'name1', password: 'password1', type: GameType.catan },
-      { name: 'name2', password: 'password2', type: GameType.pandemic }
-    ];
+  public getActiveGames() {
+    return this.activeGames;
   }
 
 }
