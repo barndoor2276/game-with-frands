@@ -24,11 +24,11 @@ export class GameMenuComponent implements OnInit {
     private gameService: GameService,
     private logger: LoggerService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.gameService.getActiveGames();
   }
 
-  public onNewGameClick() {
+  public onNewGameClick(): void {
     const dialogRef = this.dialog.open(CreateGameComponent, {
       width: '75%',
       data: 'Create Game'

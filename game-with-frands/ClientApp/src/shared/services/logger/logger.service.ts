@@ -2,19 +2,19 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class LoggerService {
-  public error(msg: any): void {
+  public error(msg: string | Error): void {
     console.error(msg);
   }
 
-  public warn(msg: any): void {
+  public warn(msg: string): void {
     console.warn(msg);
   }
 
-  public info(msg: any): void {
+  public info(msg: string): void {
     console.info(msg);
   }
 
-  public debug(msg: any): void {
+  public debug(msg: string): void {
     console.debug(msg);
   }
 }

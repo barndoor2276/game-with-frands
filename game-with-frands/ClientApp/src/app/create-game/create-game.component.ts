@@ -18,7 +18,7 @@ export class CreateGameComponent implements OnInit {
     name: '',
     type: GameType.none,
     password: ''
-  };
+  } as GameModel;
 
   constructor(
     private dialogRef: MatDialogRef<CreateGameComponent>,
@@ -27,11 +27,11 @@ export class CreateGameComponent implements OnInit {
     @Inject('BASE_URL') private baseUrl: string) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.event.subscribe(this.gameService.createGame.bind(this.gameService), this.logger.error, () => this.event.unsubscribe());
   }
 
-  public onSubmit() {
+  public onSubmit(): void {
     this.event.emit(this.game);
     this.dialogRef.close();
   }
