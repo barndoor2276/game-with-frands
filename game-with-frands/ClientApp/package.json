@@ -8,9 +8,13 @@
     "build:ssr": "ng run game_with_frands:server:dev",
     "test": "ng test",
     "lint": "eslint src/**/*.ts",
-    "e2e": "ng e2e",
-    "pre-commit": "npm run lint",
-    "pre-push": "npm run lint"
+    "e2e": "ng e2e"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint",
+      "pre-push": "npm run lint"
+    }
   },
   "private": true,
   "dependencies": {
