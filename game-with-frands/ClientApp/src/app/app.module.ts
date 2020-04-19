@@ -15,6 +15,9 @@ import {
   MatPaginatorModule
 } from '@angular/material';
 
+/**
+ * Components
+ */
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
@@ -23,6 +26,11 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { GameMenuComponent } from './game-menu/game-menu.component';
 import { CreateGameComponent } from './create-game/create-game.component';
 
+/**
+ * Services
+ */
+import { LoggerService } from '../shared/services/logger/logger.service';
+import { GameService } from '../shared/services/game/game.service';
 
 @NgModule({
   declarations: [
@@ -54,7 +62,10 @@ import { CreateGameComponent } from './create-game/create-game.component';
     MatButtonModule,
     MatPaginatorModule
   ],
-  providers: [],
+  providers: [
+    LoggerService,
+    GameService
+  ],
   bootstrap: [AppComponent],
   entryComponents: [CreateGameComponent]
 })

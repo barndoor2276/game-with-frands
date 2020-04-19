@@ -1,8 +1,9 @@
 import { Component, Inject, EventEmitter, OnInit } from '@angular/core';
-import { GameModel } from 'src/shared/models/game/game.model';
-import { GameType } from 'src/shared/models/game/game-type.model';
+import { GameModel } from '@models/game/game.model'
+import { GameType } from '@models/game/game-type.model';
 import { MatDialogRef } from '@angular/material';
-import { HttpClient } from '@angular/common/http';
+import { LoggerService } from '@services/logger/logger.service';
+import { GameService } from '@services/game/game.service';
 
 @Component({
   selector: 'app-create-game',
@@ -12,10 +13,8 @@ import { HttpClient } from '@angular/common/http';
 export class CreateGameComponent implements OnInit {
   public title = 'Create Game';
   public gameTypes: string[] = Object.keys(GameType).filter(x => isNaN(Number(x)) === true);
-  public currentCount = 0;
   public event: EventEmitter<GameModel> = new EventEmitter();
-
-  game: GameModel = {
+  public game: GameModel = {
     name: '',
     type: GameType.none,
     password: ''
@@ -23,22 +22,16 @@ export class CreateGameComponent implements OnInit {
 
   constructor(
     private dialogRef: MatDialogRef<CreateGameComponent>,
-    private http: HttpClient,
+    private logger: LoggerService,
+    private gameService: GameService,
     @Inject('BASE_URL') private baseUrl: string) {
   }
 
   ngOnInit() {
-    this.event.subscribe(this.createGame.bind(this), console.log, () => this.event.unsubscribe());
-  }
-
-  private createGame(newGame: GameModel) {
-    this.http.post<GameModel[]>(this.baseUrl + 'game', [newGame]).subscribe(
-      result => { },
-      error => console.error(error));
+    this.event.subscribe(this.gameService.createGame.bind(this.gameService), this.logger.error, () => this.event.unsubscribe());
   }
 
   public onSubmit() {
-    console.log(this.game);
     this.event.emit(this.game);
     this.dialogRef.close();
   }

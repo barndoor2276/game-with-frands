@@ -22,7 +22,7 @@ namespace game_with_frands.Controllers
         }
 
         [HttpPost]
-        public IEnumerable<IGame> Post(IEnumerable<IGame> games)
+        public IEnumerable<IGame> Post(IEnumerable<Game> games)
         {
             GameController.ActiveGames.AddRange(games);
             return GameController.ActiveGames;

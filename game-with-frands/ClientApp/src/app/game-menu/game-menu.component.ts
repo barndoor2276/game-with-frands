@@ -1,10 +1,10 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialog, PageEvent } from '@angular/material';
-import { HttpClient } from '@angular/common/http';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, PageEvent, MatTable } from '@angular/material';
 
 import { CreateGameComponent } from '../create-game/create-game.component';
-import { GameModel } from '../../shared/models/game/game.model';
-import { GameType } from 'src/shared/models/game/game-type.model';
+import { GameModel } from '@models/game/game.model';
+import { LoggerService } from '@services/logger/logger.service';
+import { GameService } from '@services/game/game.service';
 
 @Component({
   selector: 'app-game-menu',
@@ -16,31 +16,32 @@ export class GameMenuComponent implements OnInit {
   public displayedColumns = ['name', 'password', 'type'];
   public pageSize = 10;
   public pageEvent: PageEvent;
-  private activeGames: GameModel[] = [];
+
+  @ViewChild(MatTable, { static: true }) table: MatTable<GameModel>;
 
   constructor(
     private dialog: MatDialog,
-    private http: HttpClient,
-    @Inject('BASE_URL') private baseUrl: string) { }
+    private gameService: GameService,
+    private logger: LoggerService) { }
 
   ngOnInit() {
-    this.http.get<GameModel[]>(this.baseUrl + 'game').subscribe(result => {
-      this.activeGames = result;
-    }, error => { console.log(error) });
+    this.gameService.getActiveGames();
   }
 
-  onNewGameClick() {
+  public onNewGameClick() {
     const dialogRef = this.dialog.open(CreateGameComponent, {
       width: '75%',
       data: 'Create Game'
     });
 
-    dialogRef.componentInstance.event.subscribe((result) => {
-    });
+    dialogRef.afterClosed().subscribe(
+      () => { this.gameService.getActiveGames() },
+      (err) => { this.logger.error(err) },
+      () => { this.table.renderRows() });
   }
 
-  public getActiveGames() {
-    return this.activeGames;
+  public async getActiveGames(): Promise<GameModel[]> {
+    return await this.gameService.getActiveGames();
   }
 
 }
